@@ -41,7 +41,9 @@ local browser     = "brave"
 hl.on("hyprland.start", function () 
   hl.exec_cmd(terminal)
   hl.exec_cmd("nm-applet")
-  hl.exec_cmd("waybar & hyprpaper & firefox")
+  hl.exec_cmd("qs -c overview")
+  hl.exec_cmd("swaync")
+  hl.exec_cmd("awww-daemon")
 end)
 
 
@@ -250,6 +252,7 @@ hl.device({
 local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd("rofi -show drun"))
 local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
