@@ -12,8 +12,16 @@ return {
 	},
 	{
 		"stevearc/conform.nvim",
-		dependencies = { "mason.nvim" },
-		lazy = true,
+		opts = {
+			formatters_by_ft = {
+				lua = { "stylua" },
+				rust = { "rustfmt", lsp_format = "fallback" },
+			},
+			format_on_save = {
+				timeout_ms = 500,
+				lsp_fallback = true,
+			},
+		},
 	},
 	{
 		"neovim/nvim-lspconfig",
@@ -22,34 +30,25 @@ return {
 			"williamboman/mason-lspconfig.nvim",
 		},
 		config = function()
-			-- Auto Formatt on Save
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				pattern = "*",
-				callback = function(args)
-					require("conform").format({ bufnr = args.buf })
-				end,
-			})
-			-- Lua Lsp
-			vim.lsp.config("lua_ls", {
-				settings = {
-					Lua = {
-						diagnostics = {
-							globals = { "vim" },
-						},
-						workspace = {
-							checkThirdParty = false,
-						},
-						telemetry = {
-							enable = false,
+			local servers = {
+				lua_ls = {
+					settings = {
+						Lua = {
+							diagnostics = { globals = { "vim" } },
+							workspace = { checkThirdParty = false },
+							telemetry = { enable = false },
 						},
 					},
 				},
-			})
+				rust_analyzer = {},
+				pyright = {},
+				ts_ls = {},
+			}
 
-			vim.lsp.enable("lua_ls")
-
-			vim.lsp.config("rust_analyzer", {})
-			vim.lsp.enable("rust_analyzer")
+			for name, opts in pairs(servers) do
+				vim.lsp.config(name, opts)
+				vim.lsp.enable(name)
+			end
 		end,
 	},
 }

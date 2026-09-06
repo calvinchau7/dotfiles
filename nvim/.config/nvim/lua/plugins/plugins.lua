@@ -86,4 +86,9 @@ return {
 			},
 		},
 	},
+	-- Lsp Loading
+	{
+		"j-hui/fidget.nvim",
+		opts = {},
+	},
 }
