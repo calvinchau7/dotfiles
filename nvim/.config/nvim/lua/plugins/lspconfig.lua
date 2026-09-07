@@ -16,6 +16,7 @@ return {
 			formatters_by_ft = {
 				lua = { "stylua" },
 				rust = { "rustfmt", lsp_format = "fallback" },
+				qml = { "qmlformat" },
 			},
 			format_on_save = {
 				timeout_ms = 500,
@@ -34,11 +35,16 @@ return {
 				lua_ls = {
 					settings = {
 						Lua = {
-							diagnostics = { globals = { "vim" } },
+							diagnostics = { globals = { "vim", "hl" } },
 							workspace = { checkThirdParty = false },
 							telemetry = { enable = false },
 						},
 					},
+				},
+				qmlls = {
+					cmd = { "qmlls6" },
+					filetypes = { "qml" },
+					root_markers = { "qmldir", ".git" },
 				},
 				rust_analyzer = {},
 				pyright = {},
