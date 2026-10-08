@@ -1,4 +1,0 @@
-# This file contains fish universal variable definitions.
-# VERSION: 3.0
-SETUVAR fish_greeting:
-SETUVAR fish_user_paths:/home/calvin/go/bin\x1e/home/calvin/\x2elocal/bin\x1e/home/calvin/\x2econfig/emacs/bin
