@@ -21,8 +21,22 @@ return {
 				-- render images inline in markdown/html/etc; hover for the rest
 				doc = { enabled = true, inline = true, float = true, max_width = 80, max_height = 40 },
 			},
+			-- Sidebar file tree. Oil still handles `nvim .` and `-`.
+			explorer = { replace_netrw = false },
+			picker = {
+				sources = {
+					explorer = { hidden = true }, -- show dotfiles
+				},
+			},
 		},
 		keys = {
+			{
+				"<leader>e",
+				function()
+					Snacks.explorer()
+				end,
+				desc = "File explorer",
+			},
 			{
 				"<leader>ui",
 				function()
