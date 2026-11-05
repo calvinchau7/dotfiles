@@ -1,6 +1,19 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 palette = "noctalia"
 
+# Don't print a "command timed out" warning in big repos / slow version checks
+command_timeout = 1000
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+truncation_symbol = "…/"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"
+
 [aws]
 format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
 

@@ -1,0 +1,29 @@
+[user]
+	name = Calvin Chau
+	email = calvin71203@gmail.com
+[init]
+	defaultBranch = main
+
+# --- delta: nicer diffs for git diff / log -p / show / lazygit ---
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true        # n / N jump between files in a diff
+	line-numbers = true
+	hyperlinks = true
+[merge]
+	conflictStyle = zdiff3
+
+# --- small QoL defaults ---
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true
+[fetch]
+	prune = true
+[rerere]
+	enabled = true
+[diff]
+	colorMoved = default

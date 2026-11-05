@@ -1,34 +1,56 @@
 return {
+	-- Completion + snippets
 	{
 		"saghen/blink.cmp",
-		dependencies = { "rafamadriz/friendly-snippets", "saghen/blink.lib" },
-		build = function()
-			require("blink.cmp").build():pwait()
-		end,
-
+		version = "1.*", -- release tags ship prebuilt fuzzy-matcher binaries for mac/linux/windows
+		event = { "InsertEnter", "CmdlineEnter" },
+		dependencies = { "rafamadriz/friendly-snippets" },
+		---@module 'blink.cmp'
+		---@type blink.cmp.Config
 		opts = {
+			-- Tab accepts / jumps to next snippet placeholder, S-Tab jumps back.
+			-- C-space: open menu/docs   C-e: close   C-n/C-p or Up/Down: select   C-k: signature
 			keymap = { preset = "super-tab" },
 
-			appearance = {
-				nerd_font_variant = "mono",
+			appearance = { nerd_font_variant = "mono" },
+
+			completion = {
+				accept = { auto_brackets = { enabled = true } }, -- add () after functions
+				list = {
+					selection = {
+						-- don't hijack Tab while jumping through a snippet
+						preselect = function()
+							return not require("blink.cmp").snippet_active({ direction = 1 })
+						end,
+					},
+				},
+				documentation = { auto_show = true, auto_show_delay_ms = 200 },
+				ghost_text = { enabled = true },
 			},
 
-			-- (Default) Only show the documentation popup when manually triggered
-			completion = { documentation = { auto_show = true } },
+			signature = { enabled = true },
 
-			-- Default list of enabled providers defined so that you can extend it
-			-- elsewhere in your config, without redefining it, due to `opts_extend`
 			sources = {
-				default = { "lsp", "path", "snippets", "buffer" },
+				default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+				providers = {
+					lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 100 },
+				},
 			},
 
-			-- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
-			-- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
-			-- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
-			--
-			-- See the fuzzy documentation for more information
+			cmdline = {
+				keymap = { preset = "inherit" },
+				completion = { menu = { auto_show = true } },
+			},
+
 			fuzzy = { implementation = "prefer_rust_with_warning" },
 		},
 		opts_extend = { "sources.default" },
+	},
+
+	-- Auto-close brackets/quotes while typing
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		opts = { check_ts = true },
 	},
 }

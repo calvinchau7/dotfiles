@@ -1,11 +1,13 @@
 return {
 	"ellisonleao/gruvbox.nvim",
-	priority = 1000,
-	config = function()
-		vim.cmd("colorscheme gruvbox")
-	end,
+	lazy = false,
+	priority = 1000, -- load before other plugins
 	opts = {
-		terminal_colors = true,
-		background = "dark",
+		contrast = "hard", -- darker gruvbox
 	},
+	config = function(_, opts)
+		vim.o.background = "dark"
+		require("gruvbox").setup(opts)
+		vim.cmd.colorscheme("gruvbox")
+	end,
 }
