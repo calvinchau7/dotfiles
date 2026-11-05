@@ -33,6 +33,9 @@ brew "neovim"
 brew "tree-sitter-cli"
 brew "luarocks"
 
+# languages
+brew "uv"
+
 # apps + fonts (macOS only)
 cask "ghostty" if OS.mac?
 cask "kitty" if OS.mac?

@@ -1,5 +1,5 @@
 "$schema" = 'https://starship.rs/config-schema.json'
-palette = "noctalia"
+palette = "gruvbox"
 
 # Don't print a "command timed out" warning in big repos / slow version checks
 command_timeout = 1000
@@ -295,6 +295,19 @@ format = '\[[$symbol($version)]($style)\]'
 
 [zig]
 format = '\[[$symbol($version)]($style)\]'
+
+[palettes.gruvbox]
+# Gruvbox dark hard
+blue    = "#83a598"
+red     = "#fb4934"
+green   = "#b8bb26"
+yellow  = "#fabd2f"
+cyan    = "#8ec07c"
+purple  = "#d3869b"
+magenta = "#d3869b"
+orange  = "#fe8019"
+white   = "#ebdbb2"
+black   = "#1d2021"
 
 # >>> NOCTALIA STARSHIP PALETTE >>>
 # Noctalia Starship Palette

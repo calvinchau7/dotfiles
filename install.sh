@@ -18,6 +18,7 @@ ARCH_PKGS=(
     eza bat fd ripgrep jq tealdeer tree wget stow
     git git-delta github-cli lazygit
     neovim tree-sitter-cli luarocks
+    uv
     ghostty kitty ttf-iosevka-nerd
 )
 # Arch packages from the AUR (need paru or yay)

@@ -10,7 +10,7 @@ ShellRoot {
             left: true
             right: true
         }
-        color: "#1a1b26"
+        color: "#1d2021"
         implicitHeight: 40
     }
 }

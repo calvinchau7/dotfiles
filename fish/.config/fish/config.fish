@@ -36,12 +36,14 @@ if type -q nvim
     set -gx MANPAGER "nvim +Man!"
 end
 
+# Gruvbox dark hard everywhere
+set -gx BAT_THEME gruvbox-dark
+set -gx FZF_DEFAULT_OPTS "--color=bg+:#3c3836,bg:#1d2021,spinner:#8ec07c,hl:#83a598,fg:#bdae93,header:#83a598,info:#fabd2f,pointer:#8ec07c,marker:#8ec07c,fg+:#ebdbb2,prompt:#fabd2f,hl+:#83a598,border:#504945"
+
 # --- Tools (only if installed) -----------------------------------------------
 type -q fnm; and fnm env --use-on-cd --version-file-strategy=recursive --shell fish | source
 
 if status is-interactive
-    type -q fastfetch; and fastfetch
-
     if type -q starship
         starship init fish | source
         # Collapse previous prompts to just the prompt character

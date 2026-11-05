@@ -19,7 +19,7 @@ PanelWindow {
             model: Hyprland.workspaces
             Text {
                 text: modelData.id
-                color: "#cdd6f4"
+                color: "#ebdbb2"
                 font.pixelSize: bar.fontSize
             }
         }
@@ -38,7 +38,7 @@ PanelWindow {
 
         Text {
             text: Qt.formatDateTime(clock.date, "h:mm AP")
-            color: "#94e2d5"
+            color: "#8ec07c"
             font.pixelSize: bar.fontSize
         }
     }
@@ -52,7 +52,7 @@ PanelWindow {
         // Volume
         Text {
             text: "   " + Math.round((Pipewire.defaultAudioSink?.audio?.volume ?? 0) * 100) + "%"
-            color: "#e0af68"
+            color: "#fabd2f"
             font.pixelSize: bar.fontSize
         }
         PwObjectTracker {
