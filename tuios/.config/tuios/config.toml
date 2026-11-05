@@ -119,3 +119,8 @@
 [startup]
 tiled = true
 daemon = true
+
+# ctrl+p goes to the program in the pane (nvim/telescope, fish history).
+# The palette stays on the prefix chord ctrl+b P.
+[keybindings.global]
+command_palette = []
