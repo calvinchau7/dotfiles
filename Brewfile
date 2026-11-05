@@ -32,6 +32,8 @@ brew "lazygit"
 brew "neovim"
 brew "tree-sitter-cli"
 brew "luarocks"
+brew "imagemagick"  # nvim image previews (snacks.image)
+brew "ghostscript"  # nvim pdf previews
 
 # languages
 brew "uv"
