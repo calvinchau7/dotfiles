@@ -57,6 +57,32 @@ alias ll = eza -l --git --icons
 alias la = eza -la --git --icons
 alias lt = eza --tree --level=2 --icons
 
+# --- Windows PATH ------------------------------------------------------------
+# Installers update PATH in the registry, but running shells (and every tab
+# WezTerm opens) keep the old copy. These pull the new one in.
+
+# Reload PATH from the registry, keeping entries added this session
+def --env refresh-path [] {
+    if $nu.os-info.name != 'windows' { return }
+    let reg = (^powershell -NoProfile -Command '[Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [Environment]::GetEnvironmentVariable("Path","User")'
+        | str trim | split row ';')
+    $env.Path = ($reg | append $env.Path | where $it != '' | uniq)
+}
+
+# winget, then refresh-path so new commands work right away
+def --env --wrapped winget [...args] {
+    ^winget ...$args
+    refresh-path
+}
+
+# Permanently add a folder to your user PATH (for apps that don't, like 7-Zip)
+def --env add-path [dir: path] {
+    $env.NU_ADD_PATH = ($dir | path expand)
+    ^powershell -NoProfile -Command '$p = [Environment]::GetEnvironmentVariable("Path","User"); if (($p -split ";") -notcontains $env:NU_ADD_PATH) { [Environment]::SetEnvironmentVariable("Path", "$p;$env:NU_ADD_PATH", "User") }'
+    hide-env NU_ADD_PATH
+    refresh-path
+}
+
 # --- Functions (same as fish/functions) --------------------------------------
 # Create a directory and cd into it
 def --env mkcd [dir: path] {

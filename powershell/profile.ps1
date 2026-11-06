@@ -61,6 +61,30 @@ if (Get-Command eza -ErrorAction SilentlyContinue) {
     function lt { eza --tree --level=2 --icons @args }
 }
 
+# --- PATH --------------------------------------------------------------------
+# Installers update PATH in the registry, but running shells (and every tab
+# WezTerm opens) keep the old copy. These pull the new one in.
+
+# Reload PATH from the registry, keeping entries added this session
+function refresh-path {
+    $reg = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [Environment]::GetEnvironmentVariable('Path', 'User')
+    $env:Path = (($reg -split ';') + ($env:Path -split ';') | Where-Object { $_ } | Select-Object -Unique) -join ';'
+}
+
+# winget, then refresh-path so new commands work right away
+function winget {
+    & (Get-Command winget -CommandType Application | Select-Object -First 1) @args
+    refresh-path
+}
+
+# Permanently add a folder to your user PATH (for apps that don't, like 7-Zip)
+function add-path($dir) {
+    $dir = (Resolve-Path $dir).Path
+    $p = [Environment]::GetEnvironmentVariable('Path', 'User')
+    if (($p -split ';') -notcontains $dir) { [Environment]::SetEnvironmentVariable('Path', "$p;$dir", 'User') }
+    refresh-path
+}
+
 # --- Functions (same as fish/functions) --------------------------------------
 function mkcd($dir) {
     New-Item -ItemType Directory -Force $dir | Out-Null
