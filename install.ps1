@@ -25,6 +25,8 @@ $WingetPkgs = @(
     'Neovim.Neovim', 'tree-sitter.tree-sitter-cli', 'ImageMagick.ImageMagick',
     # languages
     'astral-sh.uv',
+    # shell + completions
+    'Nushell.Nushell', 'rsteube.Carapace',
     # terminal
     'wez.wezterm'
 )
@@ -72,6 +74,8 @@ function Link-Dir($target, $source) {
 function Link-Configs {
     # nvim reads %LOCALAPPDATA%\nvim on Windows
     Link-Dir (Join-Path $env:LOCALAPPDATA 'nvim') "$Dotfiles\nvim\.config\nvim"
+    # nushell reads %APPDATA%\nushell on Windows
+    Link-Dir (Join-Path $env:APPDATA 'nushell') "$Dotfiles\nushell\.config\nushell"
     Link-Dir "$HOME\.config\wezterm" "$Dotfiles\wezterm\.config\wezterm"
 
     # starship: point at the repo file directly

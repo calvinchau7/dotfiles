@@ -1,1 +1,4 @@
 fish/.config/fish/fish_variables
+nushell/.config/nushell/history.*
+nushell/.config/nushell/vendor/
+nushell/.config/nushell/plugin.msgpackz

@@ -36,7 +36,9 @@ config.keys = {
 }
 
 if is_windows then
-  config.default_prog = { 'pwsh.exe', '-NoLogo' }
+  -- Nushell, falling back to PowerShell if it isn't installed
+  local nu = wezterm.run_child_process { 'where.exe', 'nu' }
+  config.default_prog = nu and { 'nu' } or { 'pwsh.exe', '-NoLogo' }
 
   -- Windows-style copy/paste: Ctrl+C copies if something is selected,
   -- otherwise sends a normal Ctrl+C
