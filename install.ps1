@@ -27,8 +27,8 @@ $WingetPkgs = @(
     'astral-sh.uv',
     # shell + completions
     'Nushell.Nushell', 'rsteube.Carapace', 'gerardog.gsudo',
-    # terminal
-    'wez.wezterm'
+    # terminal + font (Iosevka Nerd Font isn't on winget; wezterm falls back to this)
+    'wez.wezterm', 'DEVCOM.JetBrainsMonoNerdFont'
 )
 $PsModules = @('CompletionPredictor', 'PSFzf')
 
