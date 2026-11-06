@@ -47,6 +47,8 @@ if (Get-Module PSFzf -ListAvailable) {
 
 # --- Aliases (same names as fish/conf.d/abbreviations.fish) ------------------
 Set-Alias v nvim
+# gsudo instead of Windows' built-in sudo (approve once per session)
+if (Get-Command gsudo -ErrorAction SilentlyContinue) { Set-Alias sudo gsudo }
 function .. { Set-Location .. }
 function ... { Set-Location ../.. }
 function .... { Set-Location ../../.. }

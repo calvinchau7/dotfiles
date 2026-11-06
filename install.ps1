@@ -26,7 +26,7 @@ $WingetPkgs = @(
     # languages
     'astral-sh.uv',
     # shell + completions
-    'Nushell.Nushell', 'rsteube.Carapace',
+    'Nushell.Nushell', 'rsteube.Carapace', 'gerardog.gsudo',
     # terminal
     'wez.wezterm'
 )

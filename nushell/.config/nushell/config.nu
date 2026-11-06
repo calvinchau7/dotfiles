@@ -43,6 +43,11 @@ if (which carapace | is-not-empty) {
 
 # --- Aliases (same names as fish/conf.d/abbreviations.fish) ------------------
 alias v = nvim
+
+# Windows: gsudo (approve once per session); elsewhere the real sudo
+def --wrapped sudo [...args] {
+    if $nu.os-info.name == 'windows' { ^gsudo ...$args } else { ^sudo ...$args }
+}
 def --env .. [] { cd .. }
 def --env ... [] { cd ../.. }
 def --env .... [] { cd ../../.. }
