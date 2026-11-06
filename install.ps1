@@ -31,9 +31,9 @@ $WingetPkgs = @(
     'wez.wezterm', 'DEVCOM.JetBrainsMonoNerdFont'
 )
 # Scoop for language toolchains whose versions must pair up (ols-dev is built
-# against odin-dev nightlies; zls must match zig) — `scoop reset` switches versions
+# against odin-dev nightlies). Zig + zls come from zvm, like on macOS/Linux.
 $ScoopBuckets = @('versions')
-$ScoopPkgs = @('versions/odin-dev', 'versions/ols-dev', 'main/zig', 'main/zls')
+$ScoopPkgs = @('versions/odin-dev', 'versions/ols-dev', 'main/zvm')
 $PsModules = @('CompletionPredictor', 'PSFzf')
 
 function Info($msg) { Write-Host '==> ' -ForegroundColor Blue -NoNewline; Write-Host $msg }
@@ -57,6 +57,9 @@ function Install-Packages {
     $installed = scoop list 6> $null | ForEach-Object Name
     foreach ($p in $ScoopPkgs) {
         if (($p -split '/')[-1] -notin $installed) { Info "  scoop: $p"; scoop install $p }
+    }
+    if (-not (Get-Command zig -ErrorAction SilentlyContinue)) {
+        Info "Next: run 'zvm install --zls <version>' (or master) to get Zig + ZLS"
     }
     foreach ($m in $PsModules) {
         if (-not (Get-Module $m -ListAvailable)) {
