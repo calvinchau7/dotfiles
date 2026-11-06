@@ -1,0 +1,14 @@
+// Zellij. Without this it starts cmd.exe on Windows (no $SHELL there) with its
+// own colors, so nothing from the shell/terminal setup shows up.
+
+default_shell "nu"
+theme "gruvbox-dark"
+
+// keep wezterm's look: no pane frames, compact bars
+pane_frames false
+default_layout "compact"
+
+copy_on_select true
+scroll_buffer_size 10000
+show_startup_tips false
+show_release_notes false

@@ -23,7 +23,7 @@ $WingetPkgs = @(
 $ScoopBuckets = @('extras', 'versions', 'nerd-fonts')
 $ScoopPkgs = @(
     # shell + prompt
-    'nu', 'extras/carapace-bin', 'starship', 'fnm', 'zoxide', 'fzf', 'fastfetch', 'gsudo',
+    'nu', 'extras/carapace-bin', 'starship', 'zellij', 'fnm', 'zoxide', 'fzf', 'fastfetch', 'gsudo',
     # cli tools
     'eza', 'bat', 'fd', 'ripgrep', 'jq', 'tealdeer',
     # git
@@ -98,6 +98,7 @@ function Link-Configs {
     Link-Dir (Join-Path $env:APPDATA 'nushell') "$Dotfiles\nushell\.config\nushell"
     Link-Dir "$HOME\.config\wezterm" "$Dotfiles\wezterm\.config\wezterm"
     Link-Dir (Join-Path $env:LOCALAPPDATA 'lazygit') "$Dotfiles\lazygit\.config\lazygit"
+    Link-Dir (Join-Path $env:APPDATA 'Zellij\config') "$Dotfiles\zellij\.config\zellij"
 
     # starship: point at the repo file directly
     [Environment]::SetEnvironmentVariable('STARSHIP_CONFIG', "$Dotfiles\starship\.config\starship.toml", 'User')
