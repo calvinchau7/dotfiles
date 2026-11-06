@@ -91,19 +91,6 @@ function Link-Dir($target, $source) {
     Info "Linked $target"
 }
 
-# Hard links work for single files without admin. A git pull that changes the
-# file replaces it in the repo, so re-run this script afterwards to relink.
-function Link-File($target, $source) {
-    $item = Get-Item $target -Force -ErrorAction SilentlyContinue
-    if ($item -and $item.LinkType -eq 'HardLink' -and
-        (Get-FileHash $target).Hash -eq (Get-FileHash $source).Hash) { return }
-    if ($item -and $item.LinkType -eq 'HardLink') { Remove-Item $target -Force }
-    Backup-Path $target
-    New-Item -ItemType Directory -Force (Split-Path $target) | Out-Null
-    New-Item -ItemType HardLink -Path $target -Target $source | Out-Null
-    Info "Linked $target"
-}
-
 function Link-Configs {
     # nvim reads %LOCALAPPDATA%\nvim on Windows
     Link-Dir (Join-Path $env:LOCALAPPDATA 'nvim') "$Dotfiles\nvim\.config\nvim"
@@ -111,8 +98,6 @@ function Link-Configs {
     Link-Dir (Join-Path $env:APPDATA 'nushell') "$Dotfiles\nushell\.config\nushell"
     Link-Dir "$HOME\.config\wezterm" "$Dotfiles\wezterm\.config\wezterm"
     Link-Dir (Join-Path $env:LOCALAPPDATA 'lazygit') "$Dotfiles\lazygit\.config\lazygit"
-    Link-File "$env:APPDATA\Code\User\settings.json" "$Dotfiles\vscode\settings.json"
-    Link-File "$env:LOCALAPPDATA\Packages\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\LocalState\settings.json" "$Dotfiles\winget\settings.json"
 
     # starship: point at the repo file directly
     [Environment]::SetEnvironmentVariable('STARSHIP_CONFIG', "$Dotfiles\starship\.config\starship.toml", 'User')
