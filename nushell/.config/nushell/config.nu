@@ -83,6 +83,22 @@ def --env add-path [dir: path] {
     refresh-path
 }
 
+# Load the Visual Studio C++ toolchain (cl, link, Windows SDK) into this shell,
+# so CMake/Ninja, clangd and make can find the compiler
+def --env vsdev [] {
+    let script = '
+        $vs = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -property installationPath
+        Import-Module "$vs\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
+        $env:Path += ";${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer"
+        Enter-VsDevShell -VsInstallPath $vs -SkipAutomaticLocation -DevCmdArguments "-arch=x64 -host_arch=x64" | Out-Null
+        $vars = @{}; Get-ChildItem env: | Where-Object Name -notin "Path", "PWD", "PSModulePath" | ForEach-Object { $vars[$_.Name] = $_.Value }
+        @{ vars = $vars; path = $env:Path } | ConvertTo-Json -Compress'
+    let dev = (^powershell -NoProfile -Command $script | from json)
+    load-env $dev.vars
+    $env.Path = ($dev.path | split row ';' | append $env.Path | where $it != '' | uniq)
+    print $"VS dev env loaded: (which cl | get path.0)"
+}
+
 # --- Functions (same as fish/functions) --------------------------------------
 # Create a directory and cd into it
 def --env mkcd [dir: path] {

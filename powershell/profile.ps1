@@ -85,6 +85,16 @@ function add-path($dir) {
     refresh-path
 }
 
+# Load the Visual Studio C++ toolchain (cl, link, Windows SDK) into this shell,
+# so CMake/Ninja, clangd and make can find the compiler
+function vsdev {
+    $vs = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -property installationPath
+    Import-Module "$vs\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
+    $env:Path += ";${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer"
+    Enter-VsDevShell -VsInstallPath $vs -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -host_arch=x64' | Out-Null
+    "VS dev env loaded: $((Get-Command cl).Source)"
+}
+
 # --- Functions (same as fish/functions) --------------------------------------
 function mkcd($dir) {
     New-Item -ItemType Directory -Force $dir | Out-Null
