@@ -1,0 +1,19 @@
+# lazygit — Gruvbox dark hard, diffs through delta (same as git/.config/git/config)
+gui:
+  nerdFontsVersion: "3"
+  showFileTree: true
+  theme:
+    activeBorderColor: ["#fabd2f", bold]
+    inactiveBorderColor: ["#504945"]
+    searchingActiveBorderColor: ["#8ec07c", bold]
+    optionsTextColor: ["#83a598"]
+    selectedLineBgColor: ["#3c3836"]
+    cherryPickedCommitBgColor: ["#504945"]
+    cherryPickedCommitFgColor: ["#8ec07c"]
+    unstagedChangesColor: ["#fb4934"]
+    defaultFgColor: ["#ebdbb2"]
+git:
+  pagers:
+    - pager: delta --dark --paging=never
+os:
+  editPreset: nvim

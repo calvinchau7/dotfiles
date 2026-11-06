@@ -13,7 +13,7 @@ opt.wrap = false
 opt.splitright = true
 opt.splitbelow = true
 opt.winborder = "rounded"
-opt.list = true
+opt.list = false -- set to true to show tabs/trailing spaces
 opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 opt.pumheight = 12
 
@@ -58,7 +58,7 @@ end
 vim.diagnostic.config({
 	severity_sort = true,
 	underline = true,
-	update_in_insert = false,
+	update_in_insert = true, -- show errors while typing, not only after leaving insert
 	virtual_text = { spacing = 2, source = "if_many", prefix = "●" },
 	float = { source = true },
 	signs = {

@@ -24,7 +24,7 @@ return {
 				-- systems
 				"clangd", -- C / C++
 				"rust_analyzer", -- Rust
-				"zls", -- Zig
+				-- zls: prefers zvm's (see config below)
 				"ols", -- Odin
 				"gopls", -- Go
 				-- work stack
@@ -44,7 +44,18 @@ return {
 			automatic_enable = { exclude = { "stylua" } },
 		},
 		config = function(_, opts)
+			-- zls must match the zig version, so use zvm's when it's on PATH and
+			-- only let mason install one on machines without it
+			local has_zls = vim.fn.executable("zls") == 1
+			if not has_zls then
+				table.insert(opts.ensure_installed, "zls")
+			end
+
 			require("mason-lspconfig").setup(opts)
+
+			if has_zls then
+				vim.lsp.enable("zls")
+			end
 
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("user_lsp_attach", { clear = true }),
