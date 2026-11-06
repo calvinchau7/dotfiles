@@ -30,6 +30,10 @@ $WingetPkgs = @(
     # terminal + font (Iosevka Nerd Font isn't on winget; wezterm falls back to this)
     'wez.wezterm', 'DEVCOM.JetBrainsMonoNerdFont'
 )
+# Scoop for language toolchains whose versions must pair up (ols-dev is built
+# against odin-dev nightlies; zls must match zig) — `scoop reset` switches versions
+$ScoopBuckets = @('versions')
+$ScoopPkgs = @('versions/odin-dev', 'versions/ols-dev', 'main/zig', 'main/zls')
 $PsModules = @('CompletionPredictor', 'PSFzf')
 
 function Info($msg) { Write-Host '==> ' -ForegroundColor Blue -NoNewline; Write-Host $msg }
@@ -43,6 +47,16 @@ function Install-Packages {
         Info "  $id"
         winget install --id $id -e --silent --accept-source-agreements --accept-package-agreements
         if ($LASTEXITCODE -ne 0) { Warn "winget couldn't install $id" }
+    }
+    if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
+        Info 'Installing Scoop'
+        Invoke-RestMethod https://get.scoop.sh | Invoke-Expression
+    }
+    $buckets = scoop bucket list | ForEach-Object Name
+    foreach ($b in $ScoopBuckets) { if ($b -notin $buckets) { scoop bucket add $b } }
+    $installed = scoop list 6> $null | ForEach-Object Name
+    foreach ($p in $ScoopPkgs) {
+        if (($p -split '/')[-1] -notin $installed) { Info "  scoop: $p"; scoop install $p }
     }
     foreach ($m in $PsModules) {
         if (-not (Get-Module $m -ListAvailable)) {
