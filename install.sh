@@ -9,7 +9,7 @@ DOTFILES="$(cd "$(dirname "$0")" && pwd)"
 BACKUP="$HOME/.config-backup-$(date +%Y-%m-%d-%H%M%S)"
 OS="$(uname)"
 
-COMMON_PKGS=(fish nvim starship git ghostty kitty tuios rex)
+COMMON_PKGS=(fish nvim starship git ghostty kitty wezterm tuios rex)
 LINUX_PKGS=(hypr niri quickshell)
 
 # Arch packages (official repos)
