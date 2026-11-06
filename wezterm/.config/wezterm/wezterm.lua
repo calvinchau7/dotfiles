@@ -6,8 +6,9 @@ local config = wezterm.config_builder()
 
 local is_windows = wezterm.target_triple:find('windows') ~= nil
 
--- falls back to JetBrains Mono if Iosevka isn't installed
-config.font = wezterm.font_with_fallback { 'Iosevka Nerd Font Mono', 'JetBrainsMono Nerd Font' }
+-- Iosevka Nerd Font isn't on winget, so Windows uses JetBrains Mono
+-- (a missing font in font_with_fallback still shows a warning on every launch)
+config.font = wezterm.font(is_windows and 'JetBrainsMono Nerd Font' or 'Iosevka Nerd Font Mono')
 config.font_size = 14.0
 config.color_scheme = 'GruvboxDarkHard'
 config.window_padding = { left = 10, right = 10, top = 0, bottom = 0 }
