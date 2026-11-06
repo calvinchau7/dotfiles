@@ -11,29 +11,31 @@ $ErrorActionPreference = 'Stop'
 $Dotfiles = $PSScriptRoot
 $Backup = Join-Path $HOME ".config-backup-$(Get-Date -Format yyyy-MM-dd-HHmmss)"
 
-# winget equivalents of Brewfile (ghostty/kitty -> wezterm)
+# winget for apps and things that integrate with Windows
 $WingetPkgs = @(
-    # shell + prompt
-    'Microsoft.PowerShell', 'Starship.Starship', 'Schniz.fnm', 'ajeetdsouza.zoxide',
-    'junegunn.fzf', 'Fastfetch-cli.Fastfetch',
-    # cli tools
-    'eza-community.eza', 'sharkdp.bat', 'sharkdp.fd', 'BurntSushi.ripgrep.MSVC',
-    'jqlang.jq', 'dbrgn.tealdeer', '7zip.7zip',
-    # git
-    'Git.Git', 'dandavison.delta', 'GitHub.cli', 'JesseDuffield.lazygit',
-    # editor
-    'Neovim.Neovim', 'tree-sitter.tree-sitter-cli', 'ImageMagick.ImageMagick',
-    # languages
+    'Microsoft.PowerShell', 'Git.Git', '7zip.7zip', 'ImageMagick.ImageMagick',
     'astral-sh.uv',
-    # shell + completions
-    'Nushell.Nushell', 'rsteube.Carapace', 'gerardog.gsudo',
     # terminal + font (Iosevka Nerd Font isn't on winget; wezterm falls back to this)
     'wez.wezterm', 'DEVCOM.JetBrainsMonoNerdFont'
 )
-# Scoop for language toolchains whose versions must pair up (ols-dev is built
-# against odin-dev nightlies). Zig + zls come from zvm, like on macOS/Linux.
-$ScoopBuckets = @('versions')
-$ScoopPkgs = @('versions/odin-dev', 'versions/ols-dev', 'main/zvm')
+# Scoop for CLI tools (the Brewfile equivalents): per-user, no admin, always on
+# PATH. Toolchains whose versions must pair up live here too (ols-dev is built
+# against odin-dev nightlies); Zig + zls come from zvm, like on macOS/Linux.
+$ScoopBuckets = @('extras', 'versions')
+$ScoopPkgs = @(
+    # shell + prompt
+    'nu', 'extras/carapace-bin', 'starship', 'fnm', 'zoxide', 'fzf', 'fastfetch', 'gsudo',
+    # cli tools
+    'eza', 'bat', 'fd', 'ripgrep', 'jq', 'tealdeer',
+    # git
+    'delta', 'gh', 'extras/lazygit',
+    # editor
+    'neovim', 'tree-sitter',
+    # build
+    'cmake', 'ninja', 'make',
+    # languages
+    'versions/odin-dev', 'versions/ols-dev', 'zvm'
+)
 $PsModules = @('CompletionPredictor', 'PSFzf')
 
 function Info($msg) { Write-Host '==> ' -ForegroundColor Blue -NoNewline; Write-Host $msg }
