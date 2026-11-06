@@ -7,6 +7,13 @@ $env.config.history.file_format = 'sqlite'
 $env.config.history.max_size = 100_000
 $env.config.completions.algorithm = 'fuzzy'
 
+# Windows' ConPTY mangles the prompt marks nu emits, which makes the prompt
+# jump up a line on every keypress in WezTerm
+if $nu.os-info.name == 'windows' {
+    $env.config.shell_integration.osc133 = false
+    $env.config.shell_integration.osc633 = false
+}
+
 # --- PATH --------------------------------------------------------------------
 use std/util "path add"
 path add ($nu.home-dir | path join '.local' 'bin')

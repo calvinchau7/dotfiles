@@ -10,7 +10,7 @@ local is_windows = wezterm.target_triple:find('windows') ~= nil
 config.font = wezterm.font('Iosevka Nerd Font Mono')
 config.font_size = 14.0
 config.color_scheme = 'GruvboxDarkHard'
-config.window_padding = { left = 10, right = 10, top = 0, bottom = 0 }
+config.window_padding = { left = 10, right = 10, top = 0, bottom = 10 }
 
 config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = false
