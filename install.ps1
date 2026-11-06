@@ -15,13 +15,12 @@ $Backup = Join-Path $HOME ".config-backup-$(Get-Date -Format yyyy-MM-dd-HHmmss)"
 $WingetPkgs = @(
     'Microsoft.PowerShell', 'Git.Git', '7zip.7zip', 'ImageMagick.ImageMagick',
     'astral-sh.uv',
-    # terminal + font (Iosevka Nerd Font isn't on winget; wezterm falls back to this)
-    'wez.wezterm', 'DEVCOM.JetBrainsMonoNerdFont'
+    'wez.wezterm'
 )
 # Scoop for CLI tools (the Brewfile equivalents): per-user, no admin, always on
 # PATH. Toolchains whose versions must pair up live here too (ols-dev is built
 # against odin-dev nightlies); Zig + zls come from zvm, like on macOS/Linux.
-$ScoopBuckets = @('extras', 'versions')
+$ScoopBuckets = @('extras', 'versions', 'nerd-fonts')
 $ScoopPkgs = @(
     # shell + prompt
     'nu', 'extras/carapace-bin', 'starship', 'fnm', 'zoxide', 'fzf', 'fastfetch', 'gsudo',
@@ -34,7 +33,9 @@ $ScoopPkgs = @(
     # build
     'cmake', 'ninja', 'make',
     # languages
-    'versions/odin-dev', 'versions/ols-dev', 'zvm'
+    'versions/odin-dev', 'versions/ols-dev', 'zvm',
+    # fonts
+    'nerd-fonts/Iosevka-NF-Mono', 'nerd-fonts/JetBrainsMono-NF'
 )
 $PsModules = @('CompletionPredictor', 'PSFzf')
 
